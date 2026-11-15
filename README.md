@@ -2,70 +2,63 @@
 
 **High-accuracy Rocket Launch Visibility & Sky-Pass Predictor**
 
-ASTROCAM predicts when and where a rocket will be visible in the sky from any observer location on Earth. It uses launch azimuth relative to the launch site, multi-stage vehicle models, and advanced orbital mechanics.
+Runs entirely in the browser (pure JavaScript). No server required.
 
-## Current Features (v0.2)
+## Live Demo
 
-- Observer location (manual coordinates)
-- Multi-country / any launch site support
-- Launch-azimuth locked inertial plane
+After enabling GitHub Pages (Settings → Pages → Deploy from branch `main` / root):
+
+**https://meta43260-cyber.github.io/ASTROCAM/**
+
+## Features
+
+- 3DOF ascent dynamics + J2 gravity
 - Multi-stage vehicles + fairing jettison
-- 3-DOF ascent dynamics + J2 perturbation
-- Atmospheric model (US-1976) + drag
-- Atmospheric refraction correction (Saemundsson)
+- US-1976 atmosphere + Mach-dependent drag
+- Launch-azimuth locked inertial plane
+- Atmospheric refraction (Saemundsson)
 - Solar illumination check
-- Full visibility timeline (azimuth, elevation, range)
-- Simple web UI (Thai)
+- Observer look-angle timeline
+- Interactive Leaflet ground track
+- Fully client-side → works on GitHub Pages
 
-## Quick Start
+## How to use
+
+1. Set observer coordinates (default = Bangkok)
+2. Set launch site + azimuth
+3. Adjust stage parameters / payload if desired
+4. Click **จำลองการมองเห็น**
+5. View summary + map track
+
+## Local development
+
+Just open `index.html` with a local static server (modules require http):
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+npx serve .
+# or
+python -m http.server 8000
 ```
 
-Open http://localhost:8000
-
-API docs: http://localhost:8000/docs
-
-## API
-
-- `GET /api/health`
-- `POST /api/test_look` – geometric look-angle test
-- `POST /api/simulate` – full multi-stage ascent + observer visibility
-
-## Project Layout
+## Project structure
 
 ```
 ASTROCAM/
-├── main.py
-├── engine/
-│   ├── constants.py
-│   ├── atmosphere.py
-│   ├── coordinates.py
-│   ├── dynamics.py
-│   ├── guidance.py
-│   ├── vehicle.py
-│   ├── ascent.py
-│   └── visibility.py
+├── index.html              ← entry point for GitHub Pages
+├── js/engine/              ← high-accuracy physics (JS)
+│   ├── constants.js
+│   ├── atmosphere.js
+│   ├── coordinates.js
+│   ├── dynamics.js
+│   ├── guidance.js
+│   ├── vehicle.js
+│   ├── ascent.js
+│   └── visibility.js
 ├── static/
-│   ├── index.html
 │   ├── app.js
 │   └── style.css
-└── requirements.txt
+└── (Python version still available for advanced server use)
 ```
-
-## Roadmap
-
-- Interactive Leaflet map + ground track
-- Sky polar plot (azimuth-elevation path)
-- Mission timeline editor (burn windows, separation)
-- Better terminal guidance / energy management
-- English / Thai language switch
-- Preset vehicles (Falcon 9, Ariane 6, Electron…)
-- Photo-window / twilight optimization
 
 ## License
 
