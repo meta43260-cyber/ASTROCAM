@@ -9,7 +9,7 @@
 <body>
   <header>
     <h1>ASTROCAM</h1>
-    <p>High-accuracy Rocket Launch Visibility Predictor</p>
+    <p>High-accuracy Rocket Launch Visibility & Sky-Pass Predictor</p>
   </header>
 
   <main>
@@ -19,31 +19,75 @@
     </section>
 
     <section class="card">
-      <h2>ทดสอบ Look Angle (รุ่นแรก)</h2>
-      <p>ใส่พิกัดผู้สังเกตและฐานปล่อย แล้วกดทดสอบจุดประมาณการตาม azimuth</p>
+      <h2>จำลองการมองเห็นจรวด</h2>
+
       <div class="form-grid">
-        <label>Observer Lat <input id="obs_lat" type="number" step="0.0001" value="13.7563" /></label>
-        <label>Observer Lon <input id="obs_lon" type="number" step="0.0001" value="100.5018" /></label>
-        <label>Launch Site Lat <input id="site_lat" type="number" step="0.0001" value="5.232" /></label>
-        <label>Launch Site Lon <input id="site_lon" type="number" step="0.0001" value="-52.769" /></label>
-        <label>Launch Azimuth (°) <input id="azimuth" type="number" step="0.1" value="40.0" /></label>
-        <label>Test Altitude (km) <input id="alt_km" type="number" step="1" value="200" /></label>
-        <label>Test Downrange (km) <input id="down_km" type="number" step="1" value="400" /></label>
+        <label>Observer Lat
+          <input id="obs_lat" type="number" step="0.0001" value="13.7563" />
+        </label>
+        <label>Observer Lon
+          <input id="obs_lon" type="number" step="0.0001" value="100.5018" />
+        </label>
+        <label>Launch Site Lat
+          <input id="site_lat" type="number" step="0.0001" value="5.232" />
+        </label>
+        <label>Launch Site Lon
+          <input id="site_lon" type="number" step="0.0001" value="-52.769" />
+        </label>
+        <label>Launch Azimuth (°)
+          <input id="azimuth" type="number" step="0.1" value="40.0" />
+        </label>
+        <label>Target Altitude (km)
+          <input id="target_alt" type="number" step="10" value="400" />
+        </label>
       </div>
-      <button id="btn_test">ทดสอบ</button>
+
+      <details open>
+        <summary>Stage 1 (ตัวอย่าง Ariane-like)</summary>
+        <div class="form-grid">
+          <label>Thrust SL (kN) <input id="s1_thrust_sl" type="number" value="1400" /></label>
+          <label>Thrust Vac (kN) <input id="s1_thrust_vac" type="number" value="1500" /></label>
+          <label>Isp SL <input id="s1_isp_sl" type="number" value="310" /></label>
+          <label>Isp Vac <input id="s1_isp_vac" type="number" value="340" /></label>
+          <label>Prop Mass (kg) <input id="s1_prop" type="number" value="180000" /></label>
+          <label>Dry Mass (kg) <input id="s1_dry" type="number" value="25000" /></label>
+          <label>Burn Time (s) <input id="s1_burn" type="number" value="180" /></label>
+        </div>
+      </details>
+
+      <details>
+        <summary>Stage 2 (Upper)</summary>
+        <div class="form-grid">
+          <label>Thrust Vac (kN) <input id="s2_thrust_vac" type="number" value="180" /></label>
+          <label>Isp Vac <input id="s2_isp_vac" type="number" value="457" /></label>
+          <label>Prop Mass (kg) <input id="s2_prop" type="number" value="30000" /></label>
+          <label>Dry Mass (kg) <input id="s2_dry" type="number" value="6000" /></label>
+          <label>Burn Time (s) <input id="s2_burn" type="number" value="700" /></label>
+        </div>
+      </details>
+
+      <div class="form-grid" style="margin-top:1rem">
+        <label>Payload (kg) <input id="payload" type="number" value="8000" /></label>
+        <label>Fairing (kg) <input id="fairing" type="number" value="1500" /></label>
+      </div>
+
+      <button id="btn_sim" style="margin-top:1rem">จำลองการมองเห็น</button>
       <pre id="result"></pre>
     </section>
 
     <section class="card info">
-      <h2>กำลังพัฒนา</h2>
+      <h2>ฟีเจอร์ที่มีแล้ว</h2>
       <ul>
-        <li>Full multi-stage 3DOF ascent + timeline</li>
-        <li>J2 orbital propagation</li>
-        <li>Atmospheric refraction (Saemundsson – already in core)</li>
-        <li>Solar illumination & photo window</li>
-        <li>Interactive map + sky polar plot</li>
-        <li>Thai / English UI</li>
+        <li>3DOF ascent + J2 gravity</li>
+        <li>Multi-stage + fairing jettison</li>
+        <li>Atmospheric refraction (Saemundsson)</li>
+        <li>Solar illumination check</li>
+        <li>Look-angle timeline จากผู้สังเกต</li>
+        <li>Launch-azimuth locked plane</li>
       </ul>
+      <p style="color:var(--muted);font-size:0.9rem;margin-top:0.8rem">
+        ยังอยู่ระหว่างพัฒนา: interactive map, sky polar plot, timeline editor, โหมดภาษาอังกฤษเต็มรูปแบบ
+      </p>
     </section>
   </main>
 

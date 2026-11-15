@@ -2,69 +2,70 @@
 
 **High-accuracy Rocket Launch Visibility & Sky-Pass Predictor**
 
-ASTROCAM predicts when and where a rocket will be visible in the sky from any observer location on Earth. It uses launch azimuth relative to the launch site, multi-stage vehicle timelines, and advanced orbital mechanics to produce low-error visibility forecasts.
+ASTROCAM predicts when and where a rocket will be visible in the sky from any observer location on Earth. It uses launch azimuth relative to the launch site, multi-stage vehicle models, and advanced orbital mechanics.
 
-## Key Features (Target)
+## Current Features (v0.2)
 
-- Observer location: manual coordinates or browser geolocation
-- Multi-country / multi-launch-site support
-- Launch azimuth-driven ground track and sky path
-- Multi-stage vehicles + mission timeline (ignition, cutoff, separation, fairing, payload)
-- 3-DOF ascent dynamics + J2 orbital propagation
-- Atmospheric refraction correction for elevation angles
-- Solar illumination / twilight photo-window estimation
-- Azimuth–Elevation tracks, max elevation, pass duration
-- Interactive map + sky polar plot
-- Thai / English interface
+- Observer location (manual coordinates)
+- Multi-country / any launch site support
+- Launch-azimuth locked inertial plane
+- Multi-stage vehicles + fairing jettison
+- 3-DOF ascent dynamics + J2 perturbation
+- Atmospheric model (US-1976) + drag
+- Atmospheric refraction correction (Saemundsson)
+- Solar illumination check
+- Full visibility timeline (azimuth, elevation, range)
+- Simple web UI (Thai)
 
-## Physics Core
-
-- Earth model: WGS84 + J2 perturbation
-- Atmosphere: US-1976 layers + exponential upper atmosphere
-- Drag: Mach-dependent Cd
-- Coordinate frames: Geodetic ↔ ECEF ↔ ECI (GMST)
-- Launch plane locked to requested Earth-fixed azimuth
-- Closed-loop / energy-aware terminal guidance options
-- Look-angle computation with optional refraction
-- Solar position for illumination checks
-
-## Project Structure
-
-```
-ASTROCAM/
-├── README.md
-├── requirements.txt
-├── main.py                 # FastAPI application
-├── engine/
-│   ├── __init__.py
-│   ├── constants.py
-│   ├── atmosphere.py
-│   ├── coordinates.py
-│   ├── dynamics.py         # 3DOF + J2
-│   ├── guidance.py
-│   ├── visibility.py       # Look angles + refraction + illumination
-│   └── vehicle.py
-├── static/                 # Frontend assets
-│   ├── index.html
-│   ├── app.js
-│   └── style.css
-└── tests/
-```
-
-## Quick Start (local)
+## Quick Start
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-uvicorn main:app --reload
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 Open http://localhost:8000
 
-## Status
+API docs: http://localhost:8000/docs
 
-This repository is under active construction. The initial foundation includes the project layout and core physics modules. Full multi-stage simulation, refraction model, and polished web UI are being added incrementally.
+## API
+
+- `GET /api/health`
+- `POST /api/test_look` – geometric look-angle test
+- `POST /api/simulate` – full multi-stage ascent + observer visibility
+
+## Project Layout
+
+```
+ASTROCAM/
+├── main.py
+├── engine/
+│   ├── constants.py
+│   ├── atmosphere.py
+│   ├── coordinates.py
+│   ├── dynamics.py
+│   ├── guidance.py
+│   ├── vehicle.py
+│   ├── ascent.py
+│   └── visibility.py
+├── static/
+│   ├── index.html
+│   ├── app.js
+│   └── style.css
+└── requirements.txt
+```
+
+## Roadmap
+
+- Interactive Leaflet map + ground track
+- Sky polar plot (azimuth-elevation path)
+- Mission timeline editor (burn windows, separation)
+- Better terminal guidance / energy management
+- English / Thai language switch
+- Preset vehicles (Falcon 9, Ariane 6, Electron…)
+- Photo-window / twilight optimization
 
 ## License
 

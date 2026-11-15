@@ -11,6 +11,8 @@ from .coordinates import (
 )
 from .atmosphere import atmosphere, drag_coefficient
 from .visibility import look_angles, apply_refraction, sun_unit_eci, is_illuminated
+from .vehicle import Stage, Vehicle
+from .ascent import simulate_ascent
 
 __all__ = [
     "MU", "RE", "J2", "OMEGA_E", "G0",
@@ -18,4 +20,5 @@ __all__ = [
     "gmst", "enu_basis", "launch_plane_normal",
     "atmosphere", "drag_coefficient",
     "look_angles", "apply_refraction", "sun_unit_eci", "is_illuminated",
+    "Stage", "Vehicle", "simulate_ascent",
 ]
