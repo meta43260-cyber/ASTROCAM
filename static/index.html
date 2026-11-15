@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASTROCAM – Rocket Visibility Predictor</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>ASTROCAM</h1>
+    <p>High-accuracy Rocket Launch Visibility Predictor</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>สถานะระบบ</h2>
+      <p id="health">กำลังตรวจสอบ...</p>
+    </section>
+
+    <section class="card">
+      <h2>ทดสอบ Look Angle (รุ่นแรก)</h2>
+      <p>ใส่พิกัดผู้สังเกตและฐานปล่อย แล้วกดทดสอบจุดประมาณการตาม azimuth</p>
+      <div class="form-grid">
+        <label>Observer Lat <input id="obs_lat" type="number" step="0.0001" value="13.7563" /></label>
+        <label>Observer Lon <input id="obs_lon" type="number" step="0.0001" value="100.5018" /></label>
+        <label>Launch Site Lat <input id="site_lat" type="number" step="0.0001" value="5.232" /></label>
+        <label>Launch Site Lon <input id="site_lon" type="number" step="0.0001" value="-52.769" /></label>
+        <label>Launch Azimuth (°) <input id="azimuth" type="number" step="0.1" value="40.0" /></label>
+        <label>Test Altitude (km) <input id="alt_km" type="number" step="1" value="200" /></label>
+        <label>Test Downrange (km) <input id="down_km" type="number" step="1" value="400" /></label>
+      </div>
+      <button id="btn_test">ทดสอบ</button>
+      <pre id="result"></pre>
+    </section>
+
+    <section class="card info">
+      <h2>กำลังพัฒนา</h2>
+      <ul>
+        <li>Full multi-stage 3DOF ascent + timeline</li>
+        <li>J2 orbital propagation</li>
+        <li>Atmospheric refraction (Saemundsson – already in core)</li>
+        <li>Solar illumination & photo window</li>
+        <li>Interactive map + sky polar plot</li>
+        <li>Thai / English UI</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
